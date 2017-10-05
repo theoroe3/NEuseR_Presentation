@@ -33,25 +33,42 @@ layout: true
 
 # What are tibbles ?  
 
-  * Tibbles are a modern take on data frames
-  
-  * _"keeping what time has proven to be effective, and throwing out what is not"_
-  &lt;!-- r is an old language, changing base code would ultimately lead to many problems --&gt;
-  * Part of the core tidyverse 
-  
-  * Tibbles are a unifying feature of the tidyverse
-  
+--
+
+-  Tibbles are a unifying feature of the tidyverse  
+
+--
+
 
 ```r
 install.packages("tidyverse")
 library(tidyverse)
+
+# or
+
+install.packages("tibbles")
+library(tibbles)
 ```
- 
-  * Tibbles force you to confront problems earlier, typically leading to cleaner, more expressive code
+
+--
+
+-  Tibbles are a modern take on data frames  
+      
+--
+
+ _"keeping what time has proven to be effective, and throwing out what is not"_
+
+  &lt;!-- r is an old language, changing base code would ultimately lead to many problems --&gt;
+--
+
+- Tibbles force you to confront problems earlier, typically leading to cleaner, more expressive code  
   
-  * Chat more about this later 
+  &lt;!-- Chat more about this later --&gt;
+  
+  
 ---
 background-image: url(assets/tibbles.jpg)
+
 # the trouble with tibbles...
 ---
 layout: true
@@ -65,12 +82,16 @@ layout: true
  
 ---
 
-# Come on then! Show me a tibble
+# You're a tribblemaker
 
- Tibbles can be created three ways:
-  
+&lt;!-- Tibbles can be formed in three ways: --&gt;
+--
+
+###  1) _Creation_.
+
+--
+
 .pull-left[
-  1) Using `tibble()`
 
 ```r
 tibble(a = 1:26,
@@ -85,12 +106,77 @@ tibble(a = 1:26,
 #&gt; # ... with 22 more rows
 ```
 ]
+--
 .pull-right[
-  2) By coercion  
 
 ```r
-df = data.frame(a = 1:26, 
-                b = letters)
+data_frame(a = 1:26,
+              b = letters)  
+#&gt; # A tibble: 26 x 2
+#&gt;       a     b
+#&gt;   &lt;int&gt; &lt;chr&gt;
+#&gt; 1     1     a
+#&gt; 2     2     b
+#&gt; 3     3     c
+#&gt; 4     4     d
+#&gt; # ... with 22 more rows
+```
+]
+
+---
+
+# You're a tribblemaker
+
+ &lt;!-- short for transposed tribble --&gt;
+
+`tribble()` is a way of laying out small amounts of data in easy to read form
+
+.pull-left[
+
+```r
+tribble(
+  ~a, ~`+`, ~c,
+  #--|----|----
+  "T",   1, 3.6,
+  "h",   2, 8.5,
+  "e",   3, 8.5,
+  "0",   4, 8.5)
+```
+]
+.pull-right[
+
+```
+#&gt; # A tibble: 4 x 3
+#&gt;       a   `+`     c
+#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     T     1   3.6
+#&gt; 2     h     2   8.5
+#&gt; 3     e     3   8.5
+#&gt; 4     0     4   8.5
+```
+]
+
+&lt;!-- column headers are layed out as formulas i.e ~x --&gt;
+---
+
+# You're a tribblemaker
+
+--
+
+### 2) _Coercion_.  
+
+--
+
+
+```r
+df = data.frame(a = 1:26, b = letters)
+```
+
+--
+
+.pull-left[
+
+```r
 as_tibble(df)
 #&gt; # A tibble: 26 x 2
 #&gt;       a      b
@@ -103,35 +189,108 @@ as_tibble(df)
 ```
 ]
 
+--
+
+.pull-right[
+
+```r
+as_data_frame(df)
+#&gt; # A tibble: 26 x 2
+#&gt;       a      b
+#&gt;   &lt;int&gt; &lt;fctr&gt;
+#&gt; 1     1      a
+#&gt; 2     2      b
+#&gt; 3     3      c
+#&gt; 4     4      d
+#&gt; # ... with 22 more rows
+```
+]
+
+--
+
+&lt;!-- lists, vectors, single instances of class --&gt;
 
 ---
 
-# Come on then! Show me a tibble
+# You're a tribblemaker
 
-3) Using `tribble()` &lt;!-- short for transposed tribble --&gt;
+--
 
-* `tribble()` is a way of laying out small amounts of data in easy to read form 
+### 3) _Importing_.  
 
+--
+&lt;!-- START TO SEE DIFFERENCES --&gt;
 
 ```r
-tribble(
-  ~a, ~`+`, ~c,
-  #--|----|----
-  "T",   1, 3.6,
-  "h",   2, 8.5,
-  "e",   3, 8.5,
-  "0",   4, 8.5)
-#&gt; # A tibble: 4 x 3
-#&gt;       a   `+`     c
-#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1     T     1   3.6
-#&gt; 2     h     2   8.5
-#&gt; 3     e     3   8.5
-#&gt; 4     0     4   8.5
+library(readr)
 ```
-&lt;!-- column headers are layed out as formulas i.e ~x --&gt;
+
+--
+
+To read in commas seperated files:
+
+```r
+read_csv
+```
+
+--
+
+To read in semi-colon seperated files:
+
+```r
+read_csv2
+```
+
+--
+
+To read in tab seperated files:
+
+```r
+read_tsv
+```
 
 
+---
+
+# You're a tribblemaker
+
+--
+
+.pull-left[
+
+```r
+df = read_csv("x.csv")
+#&gt; Parsed with column specification:
+#&gt; cols(
+#&gt;   `&lt;-` = col_integer(),
+#&gt;   `8` = col_integer(),
+#&gt;   `%` = col_double(),
+#&gt;   name = col_character()
+#&gt; )
+```
+]
+
+--
+
+.pull-right[
+
+```r
+df
+#&gt; # A tibble: 4 x 4
+#&gt;    `&lt;-`   `8`   `%`  name
+#&gt;   &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;
+#&gt; 1     1     2  0.25     t
+#&gt; 2     2     4  0.25     h
+#&gt; 3     3     6  0.25     e
+#&gt; 4     4     8  0.25     o
+```
+]
+
+--
+
+These _are_ all faster than `read.csv`, and are general versions of `read_delim`.
+
+&lt;!-- tell them to look up read.csv vs read_csv --&gt;
 
 ---
 
@@ -146,9 +305,10 @@ layout: true
 
 ---
 
-# tibbles Vs. data frames
+&lt;!--
+# tibbles vs. data frames
 
-* It's possible for a tibble to have column names that are not valid R variable names, aka non-syntactic names
+It's possible for a tibble to have column names that are not valid R variable names, aka non-syntactic names
 .pull-left[
 
 ```r
@@ -168,7 +328,7 @@ tibble(
 
 ```r
  data.frame(
-   "-&gt;" = "colon", 
+   `-&gt;` = "colon", 
    ` ` = "space",
    `7` = "number"
  )
@@ -177,36 +337,37 @@ tibble(
 ```
  ]
 
+--- --&gt;
 
 
----
 
+# tibbles vs. data frames
 
-# tibbles Vs. data frames
+--
 
-* A refined print process means a tibble will only show the first
- 10 rows and as many columns can fit on your screen:
+A refined print process means a tibble will only show the first 10 rows and as many columns can fit on your screen:
+ 
+--
+ 
 .pull-left[
 
 ```r
  tibble(a = 1:26,
                b = letters)
 #&gt; # A tibble: 26 x 2
-#&gt;        a     b
-#&gt;    &lt;int&gt; &lt;chr&gt;
-#&gt;  1     1     a
-#&gt;  2     2     b
-#&gt;  3     3     c
-#&gt;  4     4     d
-#&gt;  5     5     e
-#&gt;  6     6     f
-#&gt;  7     7     g
-#&gt;  8     8     h
-#&gt;  9     9     i
-#&gt; 10    10     j
-#&gt; # ... with 16 more rows
+#&gt;       a     b
+#&gt;   &lt;int&gt; &lt;chr&gt;
+#&gt; 1     1     a
+#&gt; 2     2     b
+#&gt; 3     3     c
+#&gt; 4     4     d
+#&gt; 5     5     e
+#&gt; # ... with 21 more rows
 ```
 ]
+
+--
+
 .pull-right[
 
 ```r
@@ -222,23 +383,33 @@ head(data.frame(a = 1:26,
 ```
 ]
 
+--
+
+Notice the column types are displayed above the column and the dimensions are shown at the top.
+
 ---
 
-# tibbles Vs. data frames
+# tibbles vs. data frames
 
-* the preset row options be changed using
+--
+
+The preset row options be changed using
 
 ```r
  options(tibble.print_max = 3, tibble.print_min = 1)
 ```
- i.e. if there is more than 3 rows, print only 1 rows
+
+--
+
+Now if there is more than 3 rows, print only 1 rows
  &lt;!--  default is 20, 10--&gt;
+ 
+--
+ 
 .pull-left[
 
 ```r
-options(tibble.print_max = 3, 
-        tibble.print_min = 1)
-tibble(1:3)  
+tibble(1:3)
 #&gt; # A tibble: 3 x 1
 #&gt;   `1:3`
 #&gt;   &lt;int&gt;
@@ -247,11 +418,12 @@ tibble(1:3)
 #&gt; 3     3
 ```
 ]
+
+--
+
 .pull-right[
 
 ```r
-options(tibble.print_max = 3, 
-        tibble.print_min = 1)
 tibble(1:4)
 #&gt; # A tibble: 4 x 1
 #&gt;   `1:4`
@@ -261,15 +433,37 @@ tibble(1:4)
 ```
 ]
 
- More options are available, find them by using `package?tibble`
+--
+
+More options are available, find them by using `package?tibble`
 
 ---
 
-# tibbles Vs. data frames: subsetting
+# tibbles vs. data frames: subsetting
 
-* Tibbles don't drop the variable type or partial match, no more strings as factors!  
+--
 
-.pull-left[
+Tibbles don't:
+
+--
+
+- ignore non-syntactic symbols as column headers when importing data
+
+--
+
+- drop the variable type
+
+--
+
+- partial match
+
+--
+
+- no more strings as factors!
+
+--
+
+&lt;!-- .pull-left[
 
 ```r
 tib = tibble(aa = 1:4,
@@ -300,7 +494,27 @@ df$a
 class(df[[2]])
 #&gt; [1] "factor"
 ```
- ]
+ ] 
+ --&gt;
+ 
+---
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+&lt;center&gt;
+Thank you for listening! 
+
+Any questions appreciated 
+&lt;/center&gt;
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({

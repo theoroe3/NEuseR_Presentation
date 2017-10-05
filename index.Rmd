@@ -28,24 +28,41 @@ layout: true
 
 # What are tibbles ?  
 
-  * Tibbles are a modern take on data frames
-  
-  * _"keeping what time has proven to be effective, and throwing out what is not"_
-  <!-- r is an old language, changing base code would ultimately lead to many problems -->
-  * Part of the core tidyverse 
-  
-  * Tibbles are a unifying feature of the tidyverse
-  
-```{r eval = FALSE}
+--
+
+-  Tibbles are a unifying feature of the tidyverse  
+
+--
+
+```{r, eval = FALSE}
 install.packages("tidyverse")
 library(tidyverse)
+
+# or
+
+install.packages("tibbles")
+library(tibbles)
 ```
- 
-  * Tibbles force you to confront problems earlier, typically leading to cleaner, more expressive code
+
+--
+
+-  Tibbles are a modern take on data frames  
+      
+--
+
+ _"keeping what time has proven to be effective, and throwing out what is not"_
+
+  <!-- r is an old language, changing base code would ultimately lead to many problems -->
+--
+
+- Tibbles force you to confront problems earlier, typically leading to cleaner, more expressive code  
   
-  * Chat more about this later 
+  <!-- Chat more about this later -->
+  
+  
 ---
 background-image: url(assets/tibbles.jpg)
+
 # the trouble with tibbles...
 ---
 layout: true
@@ -53,36 +70,39 @@ layout: true
  
 ---
 
-# Come on then! Show me a tibble
+# You're a tribblemaker
 
- Tibbles can be created three ways:
-  
+<!-- Tibbles can be formed in three ways: -->
+--
+
+###  1) _Creation_.
+
+--
+
 .pull-left[
-  1) Using `tibble()`
 ```{r}
 tibble(a = 1:26,
               b = letters)  
 ```  
 ]
+--
 .pull-right[
-  2) By coercion  
 ```{r}
-df = data.frame(a = 1:26, 
-                b = letters)
-as_tibble(df)
-```
+data_frame(a = 1:26,
+              b = letters)  
+``` 
 ]
-
 
 ---
 
-# Come on then! Show me a tibble
+# You're a tribblemaker
 
-3) Using `tribble()` <!-- short for transposed tribble -->
+ <!-- short for transposed tribble -->
 
-* `tribble()` is a way of laying out small amounts of data in easy to read form 
+`tribble()` is a way of laying out small amounts of data in easy to read form
 
-```{r}
+.pull-left[
+```{r, eval = FALSE}
 tribble(
   ~a, ~`+`, ~c,
   #--|----|----
@@ -91,9 +111,115 @@ tribble(
   "e",   3, 8.5,
   "0",   4, 8.5)
 ```
+]
+.pull-right[
+```{r, echo=FALSE}
+tribble(
+  ~a, ~`+`, ~c,
+  #--|----|----
+  "T",   1, 3.6,
+  "h",   2, 8.5,
+  "e",   3, 8.5,
+  "0",   4, 8.5)
+```
+]
+
 <!-- column headers are layed out as formulas i.e ~x -->
+---
+
+# You're a tribblemaker
+
+--
+
+### 2) _Coercion_.  
+
+--
+
+```{r, eval = TRUE}
+df = data.frame(a = 1:26, b = letters)
+```
+
+--
+
+.pull-left[
+```{r}
+as_tibble(df)
+```
+]
+
+--
+
+.pull-right[
+```{r}
+as_data_frame(df)
+```
+]
+
+--
+
+<!-- lists, vectors, single instances of class -->
+
+---
+
+# You're a tribblemaker
+
+--
+
+### 3) _Importing_.  
+
+--
+<!-- START TO SEE DIFFERENCES -->
+```{r}
+library(readr)
+```
+
+--
+
+To read in commas seperated files:
+```{r, eval=FALSE}
+read_csv
+```
+
+--
+
+To read in semi-colon seperated files:
+```{r, eval=FALSE}
+read_csv2
+```
+
+--
+
+To read in tab seperated files:
+```{r, eval=FALSE}
+read_tsv
+```
 
 
+---
+
+# You're a tribblemaker
+
+--
+
+.pull-left[
+```{r}
+df = read_csv("x.csv")
+```
+]
+
+--
+
+.pull-right[
+```{r}
+df
+```
+]
+
+--
+
+These _are_ all faster than `read.csv`, and are general versions of `read_delim`.
+
+<!-- tell them to look up read.csv vs read_csv -->
 
 ---
 
@@ -102,9 +228,10 @@ layout: true
 
 ---
 
-# tibbles Vs. data frames
+<!--
+# tibbles vs. data frames
 
-* It's possible for a tibble to have column names that are not valid R variable names, aka non-syntactic names
+It's possible for a tibble to have column names that are not valid R variable names, aka non-syntactic names
 .pull-left[
 ```{r}
 tibble(
@@ -118,30 +245,36 @@ tibble(
 .pull-right[
 ```{r}
  data.frame(
-   "->" = "colon", 
+   `->` = "colon", 
    ` ` = "space",
    `7` = "number"
  )
 ```
  ]
 
-
-
----
+--- -->
 ```{r include = FALSE}
-options(tibble.print_max = 20, tibble.print_min = 10)
+options(tibble.print_max = 10, tibble.print_min = 5)
 ```
 
-# tibbles Vs. data frames
 
-* A refined print process means a tibble will only show the first
- 10 rows and as many columns can fit on your screen:
+# tibbles vs. data frames
+
+--
+
+A refined print process means a tibble will only show the first 10 rows and as many columns can fit on your screen:
+ 
+--
+ 
 .pull-left[
 ```{r}
  tibble(a = 1:26,
                b = letters)
 ```
 ]
+
+--
+
 .pull-right[
 ```{r}
 head(data.frame(a = 1:26,
@@ -149,40 +282,73 @@ head(data.frame(a = 1:26,
 ```
 ]
 
+--
+
+Notice the column types are displayed above the column and the dimensions are shown at the top.
+
 ---
 
-# tibbles Vs. data frames
+# tibbles vs. data frames
 
-* the preset row options be changed using
-```{r, eval = TRUE}
+--
+
+The preset row options be changed using
+```{r}
  options(tibble.print_max = 3, tibble.print_min = 1)
 ```
- i.e. if there is more than 3 rows, print only 1 rows
+
+--
+
+Now if there is more than 3 rows, print only 1 rows
  <!--  default is 20, 10-->
+ 
+--
+ 
 .pull-left[
 ```{r}
-options(tibble.print_max = 3, 
-        tibble.print_min = 1)
-tibble(1:3)  
+tibble(1:3)
 ```
 ]
+
+--
+
 .pull-right[
 ```{r}
-options(tibble.print_max = 3, 
-        tibble.print_min = 1)
 tibble(1:4)
 ```
 ]
 
- More options are available, find them by using `package?tibble`
+--
+
+More options are available, find them by using `package?tibble`
 
 ---
 
-# tibbles Vs. data frames: subsetting
+# tibbles vs. data frames: subsetting
 
-* Tibbles don't drop the variable type or partial match, no more strings as factors!  
+--
 
-.pull-left[
+Tibbles don't:
+
+--
+
+- ignore non-syntactic symbols as column headers when importing data
+
+--
+
+- drop the variable type
+
+--
+
+- partial match
+
+--
+
+- no more strings as factors!
+
+--
+
+<!-- .pull-left[
 ```{r}
 tib = tibble(aa = 1:4,
          bb = letters[1:4])
@@ -201,4 +367,24 @@ df[[2]]
 df$a
 class(df[[2]])
 ```
- ]
+ ] 
+ -->
+ 
+---
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+<center>
+Thank you for listening! 
+
+Any questions appreciated 
+</center>
