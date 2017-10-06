@@ -30,18 +30,18 @@ layout: true
 
 --
 
--  Tibbles are a unifying feature of the tidyverse  
+Tibbles are a unifying feature of the tidyverse  
 
 --
 
 ```{r, eval = FALSE}
 install.packages("tidyverse")
-library(tidyverse)
-
-# or
-
+library("tidyverse")
+```
+or
+```{r, eval=FALSE}
 install.packages("tibbles")
-library(tibbles)
+library("tibbles")
 ```
 
 --
@@ -50,7 +50,7 @@ library(tibbles)
       
 --
 
- _"keeping what time has proven to be effective, and throwing out what is not"_
+ _"Keeping what time has proven to be effective, and throwing out what is not"_
 
   <!-- r is an old language, changing base code would ultimately lead to many problems -->
 --
@@ -75,7 +75,7 @@ layout: true
 <!-- Tibbles can be formed in three ways: -->
 --
 
-###  1) _Creation_.
+###  1) _Creation_
 
 --
 
@@ -131,7 +131,7 @@ tribble(
 
 --
 
-### 2) _Coercion_.  
+### 2) _Coercion_
 
 --
 
@@ -165,12 +165,12 @@ as_data_frame(df)
 
 --
 
-### 3) _Importing_.  
+### 3) _Importing_ 
 
 --
 <!-- START TO SEE DIFFERENCES -->
 ```{r}
-library(readr)
+library("readr")
 ```
 
 --
@@ -194,7 +194,7 @@ To read in tab seperated files:
 read_tsv
 ```
 
-
+</center>
 ---
 
 # You're a tribblemaker
@@ -369,22 +369,16 @@ class(df[[2]])
 ```
  ] 
  -->
- 
+
 ---
+layout: true
 
-.
+---
+background-image: url(assets/tribbles.jpg)
+background-size: cover
 
-.
+class: center, middle, inverse
 
-.
-
-.
-
-.
-
-.
-<center>
 Thank you for listening! 
 
-Any questions appreciated 
-</center>
+Any questions?

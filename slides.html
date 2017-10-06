@@ -3,7 +3,7 @@
   <head>
     <title>The Trouble with Tibbles</title>
     <meta charset="utf-8">
-    <meta name="author" content="Jumping Rivers (@jumping_uk)" />
+    <meta name="author" content="Colin Gillespie (@csgillespie)" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
     <link rel="stylesheet" href="style.css" type="text/css" />
   </head>
@@ -13,7 +13,7 @@ class: center, middle, inverse, title-slide
 
 # The Trouble with Tibbles
 ## Theo Roe
-### Jumping Rivers (<a href="https://twitter.com/jumping_uk">@jumping_uk</a>)
+### Colin Gillespie (<a href="https://twitter.com/csgillespie">@csgillespie</a>)
 
 ---
 
@@ -35,19 +35,20 @@ layout: true
 
 --
 
--  Tibbles are a unifying feature of the tidyverse  
+Tibbles are a unifying feature of the tidyverse  
 
 --
 
 
 ```r
 install.packages("tidyverse")
-library(tidyverse)
+library("tidyverse")
+```
+or
 
-# or
-
+```r
 install.packages("tibbles")
-library(tibbles)
+library("tibbles")
 ```
 
 --
@@ -56,7 +57,7 @@ library(tibbles)
       
 --
 
- _"keeping what time has proven to be effective, and throwing out what is not"_
+ _"Keeping what time has proven to be effective, and throwing out what is not"_
 
   &lt;!-- r is an old language, changing base code would ultimately lead to many problems --&gt;
 --
@@ -87,7 +88,7 @@ layout: true
 &lt;!-- Tibbles can be formed in three ways: --&gt;
 --
 
-###  1) _Creation_.
+###  1) _Creation_
 
 --
 
@@ -163,7 +164,7 @@ tribble(
 
 --
 
-### 2) _Coercion_.  
+### 2) _Coercion_
 
 --
 
@@ -216,13 +217,13 @@ as_data_frame(df)
 
 --
 
-### 3) _Importing_.  
+### 3) _Importing_ 
 
 --
 &lt;!-- START TO SEE DIFFERENCES --&gt;
 
 ```r
-library(readr)
+library("readr")
 ```
 
 --
@@ -249,7 +250,7 @@ To read in tab seperated files:
 read_tsv
 ```
 
-
+&lt;/center&gt;
 ---
 
 # You're a tribblemaker
@@ -496,25 +497,19 @@ class(df[[2]])
 ```
  ] 
  --&gt;
- 
+
 ---
+layout: true
 
-.
+---
+background-image: url(assets/tribbles.jpg)
+background-size: cover
 
-.
+class: center, middle, inverse
 
-.
-
-.
-
-.
-
-.
-&lt;center&gt;
 Thank you for listening! 
 
-Any questions appreciated 
-&lt;/center&gt;
+Any questions?
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
