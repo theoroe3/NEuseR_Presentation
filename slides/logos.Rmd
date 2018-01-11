@@ -1,0 +1,16 @@
+---
+output:
+  xaringan::moon_reader:
+    css: ["default", "style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+background-image: url(assets/sponsors2.png)
+background-size: 100% 100%
+---

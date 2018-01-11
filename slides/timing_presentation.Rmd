@@ -1,0 +1,233 @@
+---
+title: "Timing in R"
+subtitle: "Jumping Rivers"
+author: "Theo Roe"
+output:
+  xaringan::moon_reader:
+    css: ["default", "style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+library("jrPresentation")
+library(dplyr)
+set_presentation_options()
+```
+
+
+layout: true
+`r add_border(inverse=FALSE)`
+---
+
+# Intro
+
+- *"Good things come to those who wait"* 
+
+---
+
+# Intro
+
+- *"Good things come to those who wait"* - __*Wrong!*__
+
+--
+
+
+- Knowing how to time your R code *will* save you time when running arduous scripts.
+
+--
+
+- There are several functions & packages available to help
+
+---
+
+class: middle, center
+# Nested timings
+
+---
+
+
+# 1) `Sys.time()`
+
+`Sys.time()` takes a "snap-shot" of the current time and so it can be used to record start and end times of code.
+
+```{r}
+start_time = Sys.time()
+Sys.sleep(0.5)
+end_time = Sys.time()
+```
+
+--
+
+To calculate the difference, we just use a simple subtraction
+```{r}
+end_time - start_time
+```
+
+---
+
+# 2) The tictoc package
+
+You can install __tictoc__ from `CRAN` via
+```{r, eval = FALSE}
+install.packages("tictoc")
+```
+```{r}
+library(tictoc)
+```
+
+**tictoc** supplies a few more options to customise timing within R 
+
+---
+
+# 2) The tictoc package
+
+At it's most basic it acts like `Sys.time()`:
+
+```{r}
+
+tic()
+Sys.sleep(0.5)
+toc()
+```
+
+---
+
+# 2) The tictoc package
+
+```{r}
+tic("total time") 
+
+tic("section 1")
+
+Sys.sleep(0.5)
+
+toc(log = TRUE)
+
+tic("section 2")
+
+Sys.sleep(2)
+
+toc(log = TRUE)
+
+toc(log = TRUE)
+```
+
+<!-- Mention Each `toc()` only ends the most recent `tic()` that is still running -->
+---
+
+# 2) The tictoc package
+
+We can view our logged timings with 
+```{r}
+tic.log(format = TRUE)
+```
+
+We can also reset the log via
+```{r}
+tic.clearlog()
+```
+
+---
+class: middle, center
+# Comparing code
+
+---
+
+# 1) `system.time()`
+
+`system.time()` can be used to time functions without having to take note of the start and end times. 
+```{r}
+system.time(Sys.sleep(0.5))
+
+system.time(Sys.sleep(2))
+```
+
+Only take note of the `elapsed` time
+
+For `user` and `system` definitions see `?proc.time`
+---
+
+# 1) `system.time()`
+
+For a repeated timing, we would use the `replicate()` function. 
+```{r}
+system.time(replicate(10, Sys.sleep(0.01)))
+```
+
+---
+
+# 2) The **microbenchmark** package
+
+You can install __microbenchmark__ from `CRAN` via 
+```{r, eval = FALSE}
+install.packages("microbenchmark")
+```
+```{r, warning = FALSE}
+library(microbenchmark)
+```
+ 
+---
+
+# 2) The **microbenchmark** package
+
+At it's most basic, `microbenchmark()` can be used to time single pieces of code.
+
+```{r}
+# times = 10: repeat the test 10 times
+# unit = "s": output in seconds
+microbenchmark(Sys.sleep(0.1), times = 10, unit = "s")
+```
+
+We can record our times in anything from seconds to nanoseconds(!!!!)
+
+---
+
+# 2) The **microbenchmark** package
+
+```{r}
+time = microbenchmark(sqrt = sqrt(1:500), 
+                      power = (1:500)^0.5,
+                       times = 10, 
+                       unit = "ns")
+time
+```
+
+---
+
+# 2) The **microbenchmark** package
+ 
+__microbenchmark__ comes with a two functions for plotting:
+
+1. `autoplot.microbenchmark()`
+
+2. `boxplot.microbenchmark()`
+
+These functions are not exported and so to access them you must use `microbenchmark:::function_name()`
+---
+
+# 2) The **microbenchmark** package
+
+```{r,  out.width="90%"}
+microbenchmark:::autoplot.microbenchmark(time)
+```
+
+
+---
+
+#  2) The **microbenchmark** package
+
+```{r, out.width="90%"}
+microbenchmark:::boxplot.microbenchmark(time)
+```
+
+---
+class: middle, center
+
+Thank you!
